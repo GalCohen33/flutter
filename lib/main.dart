@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => const CatalogScreen(),
             '/cart': (context) => const CartScreen(),
-            '/books': (context) => BooksCatalogScreen()
+            '/books': (context) => const BooksCatalogScreen()
           },
         ));
   }

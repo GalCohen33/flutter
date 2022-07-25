@@ -1,11 +1,45 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_one/Models/books.model.dart';
 import '../Services/books.service.dart';
 
-class BooksCatalogScreen extends StatelessWidget {
-  BooksCatalogScreen({Key? key}) : super(key: key);
+class BooksCatalogScreen extends StatefulWidget {
+  const BooksCatalogScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BooksCatalogScreen> createState() => _BooksCatalogScreenState();
+}
+
+class _BooksCatalogScreenState extends State<BooksCatalogScreen> {
+  int index = 0;
+  var topics = ['fish', 'war', 'putin', 'trump'];
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (index == 3)
+            index = 0;
+          else
+            index++;
+        });
+      },
+      child: BooksCatalog(query: topics[index]),
+    );
+  }
+}
+
+class BooksCatalog extends StatelessWidget {
+  final query;
+
+  const BooksCatalog({Key? key, required this.query}) : super(key: key);
 
   //final Future<List<BookModel>> _books = BooksService.fetchBook();
+  // BooksCatalogScreen({
+  //   Key? key,
+  //   required this.query,
+  // }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +51,8 @@ class BooksCatalogScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.headline2!,
             textAlign: TextAlign.center,
             child: FutureBuilder<List<BookModel>>(
-                future: BooksService
-                    .fetchBook(), // _books, // a previously-obtained Future<String> or null
+                future: BooksService.fetchBook(
+                    query), // _books, // a previously-obtained Future<String> or null
                 builder: (BuildContext context,
                     AsyncSnapshot<List<BookModel>> snapshot) {
                   //List<Widget> children;
@@ -59,20 +93,28 @@ class BooksCatalogScreen extends StatelessWidget {
                       )
                     ];
                   }
-                  return ListView.builder(
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        return _bookItem(snapshot.data![index]);
-                        //ProjectModel project = snapshot.data![index];
-                        // return Column(children: const <Widget>[
-                        //   // Widget to display the list of project
-                        //   Icon(
-                        //     Icons.error_outline,
-                        //     color: Colors.red,
-                        //     size: 60,
-                        //   )
-                        // ]);
-                      });
+                  return snapshot.data != null
+                      ? ListView.builder(
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            return _bookItem(snapshot.data![index]);
+
+                            //return _bookItem(snapshot.data![index]);
+                            //ProjectModel project = snapshot.data![index];
+                            // return Column(children: const <Widget>[
+                            //   // Widget to display the list of project
+                            //   Icon(
+                            //     Icons.error_outline,
+                            //     color: Colors.red,
+                            //     size: 60,
+                            //   )
+                            // ]);
+                          })
+                      : Image.asset(
+                          'assets/images/no-image.jpg',
+                          fit: BoxFit.cover,
+                          scale: 4,
+                        );
                 })));
   }
 }

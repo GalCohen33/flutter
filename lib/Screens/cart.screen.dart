@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_one/Models/cart.model.dart';
 import 'package:provider/provider.dart';
-import '../Services/books.service.dart';
 import '../Widgets/header.widget.dart';
 
 class CartScreen extends StatelessWidget {
@@ -11,7 +10,6 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getBooks();
     CartModel cart = context.watch<CartModel>();
     return Scaffold(
       // No appbar provided to the Scaffold, only a body with a
@@ -34,10 +32,5 @@ class CartScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  getBooks() async {
-    var xxx = await BooksService.fetchBook();
-    debugPrint(jsonEncode(xxx));
   }
 }
