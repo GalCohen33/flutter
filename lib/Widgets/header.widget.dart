@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 
-class headerWidget extends StatelessWidget {
+class headerWidget extends StatelessWidget with PreferredSizeWidget {
   final title;
 
   const headerWidget({Key? key, required this.title}) : super(key: key);
@@ -18,9 +18,19 @@ class headerWidget extends StatelessWidget {
       backgroundColor: Color.fromARGB(255, 170, 154, 29),
       //flexibleSpace: Placeholder(),
       // Make the initial height of the SliverAppBar larger than normal.
-      actions: [iconBtn(title: title)],
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () => Navigator.pushNamed(context, '/books'),
+        ),
+        iconBtn(title: title)
+      ],
     );
   }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => const Size.fromHeight(200);
 }
 
 class iconBtn extends StatelessWidget {

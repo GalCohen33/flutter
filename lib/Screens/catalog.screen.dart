@@ -53,25 +53,25 @@ class CatalogScreen extends StatelessWidget {
   }
 }
 
-class _MyAppBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      title: Text('Catalog', style: Theme.of(context).textTheme.headline3),
-      floating: true,
-      backgroundColor: Colors.yellow,
-      // flexibleSpace: Placeholder(),
-      // //   // Make the initial height of the SliverAppBar larger than normal.
-      // expandedHeight: 200,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          onPressed: () => Navigator.pushNamed(context, '/cart'),
-        ),
-      ],
-    );
-  }
-}
+// class _MyAppBar extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return SliverAppBar(
+//       title: Text('Catalog', style: Theme.of(context).textTheme.headline3),
+//       floating: true,
+//       backgroundColor: Colors.yellow,
+//       // flexibleSpace: Placeholder(),
+//       // //   // Make the initial height of the SliverAppBar larger than normal.
+//       // expandedHeight: 200,
+//       actions: [
+//         IconButton(
+//           icon: const Icon(Icons.shopping_cart),
+//           onPressed: () => Navigator.pushNamed(context, '/cart'),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class _MyListItem extends StatelessWidget {
   final int index;

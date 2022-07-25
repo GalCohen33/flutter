@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_one/Models/catalog.model.dart';
 import 'package:flutter_one/Screens/cart.screen.dart';
+import 'package:flutter_one/Services/books.service.dart';
 import 'package:provider/provider.dart';
 
 import 'Models/cart.model.dart';
+import 'Screens/booksCatalog.screen.dart';
 import 'Screens/catalog.screen.dart';
 
 void main() {
@@ -36,10 +38,11 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: 'Gal demo app',
-          initialRoute: '/',
+          initialRoute: '/books',
           routes: {
             '/': (context) => const CatalogScreen(),
             '/cart': (context) => const CartScreen(),
+            '/books': (context) => BooksCatalogScreen()
           },
         ));
   }
