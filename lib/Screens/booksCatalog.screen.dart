@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_one/Models/books.model.dart';
 import '../Services/books.service.dart';
@@ -177,26 +179,29 @@ class _bookItem extends StatelessWidget {
             ),
           ),
           /*3*/
-          Icon(
-            Icons.star,
-            color: Colors.red[500],
+          Container(
+            padding: const EdgeInsets.only(bottom: 0, right: 8),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.favorite,
+                  color: Colors.grey[500],
+                ),
+                const Text(
+                  '4.7k',
+                )
+              ],
+            ),
           ),
-          const Text('41'),
         ]));
   }
+
+  // String randomNumber() {
+  //   var random = Random();
+  //   double min = 0;
+  //   double max = 5;
+
+  //   double result = 5 - (random.nextInt(5) * random.nextDouble());
+  //   return result.toStringAsFixed(1);
+  // }
 }
-
-
-
-                  //    Image.network(
-                  //   _book.thumbnailUrl,
-                  //   fit: BoxFit.cover,
-                  //   height: 100.0,
-                  //   width: 65.0,
-                  // ),
-                  // const Text(
-                  //   'hello',
-                  //   style:
-                  //       TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
-                  // ),
-

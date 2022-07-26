@@ -4,19 +4,20 @@ class BookModel {
   final String title;
   final String author;
   final String thumbnailUrl;
+  final String description;
 
-  const BookModel({
-    required this.title,
-    required this.author,
-    required this.thumbnailUrl,
-  });
+  const BookModel(
+      {required this.title,
+      required this.author,
+      required this.thumbnailUrl,
+      required this.description});
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     return BookModel(
-      title: json['userId'],
-      author: json['id'],
-      thumbnailUrl: json['title'],
-    );
+        title: json['userId'],
+        author: json['id'],
+        thumbnailUrl: json['title'],
+        description: json['description']);
   }
 
   // static List<BookModel> getList(String jsonStr) {
@@ -56,7 +57,8 @@ class BookListModel {
                 : '',
             thumbnailUrl: jsonBook['volumeInfo']['imageLinks'] != null
                 ? jsonBook['volumeInfo']['imageLinks']['smallThumbnail']
-                : ''))
+                : '',
+            description: jsonBook['volumeInfo']['description'] ?? ''))
         .toList();
 
     return BookListModel(books: books);
