@@ -4,6 +4,7 @@ import 'package:flutter_one/Models/books.model.dart';
 import 'package:flutter_one/Models/booksFavorites.model.dart';
 import 'package:provider/provider.dart';
 import '../Services/books.service.dart';
+import '../Widgets/searchBox.widget.dart';
 
 class BooksCatalogScreen extends StatefulWidget {
   const BooksCatalogScreen({Key? key}) : super(key: key);
@@ -32,32 +33,43 @@ class _BooksCatalogScreenState extends State<BooksCatalogScreen> {
   }
 }
 
-class BooksCatalog extends StatelessWidget {
+class BooksCatalog extends StatefulWidget {
   final query;
 
   const BooksCatalog({Key? key, required this.query}) : super(key: key);
 
-  //final Future<List<BookModel>> _books = BooksService.fetchBook();
-  // BooksCatalogScreen({
-  //   Key? key,
-  //   required this.query,
-  // }) : super(key: key);
+  @override
+  State<BooksCatalog> createState() => _BooksCatalogState();
+}
 
+class _BooksCatalogState extends State<BooksCatalog> {
+  bool open = false;
+
+  //final Future<List<BookModel>> _books = BooksService.fetchBook();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('books'), actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () => Navigator.pushNamed(context, '/favorites'),
-          )
-        ]), //headerWidget(key: key, title: 'books'),
+        appBar: AppBar(
+            bottom: open ? const SearchBox() : null,
+            title: const Text('books'),
+            actions: [
+              IconButton(
+                  icon:
+                      open ? const Icon(Icons.close) : const Icon(Icons.search),
+                  onPressed: () => setState(() {
+                        open = !open;
+                      })),
+              IconButton(
+                icon: const Icon(Icons.favorite_border),
+                onPressed: () => Navigator.pushNamed(context, '/favorites'),
+              ),
+            ]), //headerWidget(key: key, title: 'books'),
         body: DefaultTextStyle(
             style: Theme.of(context).textTheme.headline2!,
             textAlign: TextAlign.center,
             child: FutureBuilder<List<BookModel>>(
-                future: BooksService.fetchBook(
-                    query), // _books, // a previously-obtained Future<String> or null
+                future: BooksService.fetchBook(widget
+                    .query), // _books, // a previously-obtained Future<String> or null
                 builder: (BuildContext context,
                     AsyncSnapshot<List<BookModel>> snapshot) {
                   //List<Widget> children;
