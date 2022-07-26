@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_one/Models/booksFavorites.model.dart';
 import 'package:flutter_one/Models/catalog.model.dart';
+import 'package:flutter_one/Screens/booksFavorite.screen.dart';
 import 'package:flutter_one/Screens/cart.screen.dart';
 import 'package:flutter_one/Services/books.service.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (context) => FavoriteBooksModel()),
+
           // In this sample app, CatalogModel never changes, so a simple Provider
           // is sufficient.
           Provider(
@@ -42,7 +46,8 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => const CatalogScreen(),
             '/cart': (context) => const CartScreen(),
-            '/books': (context) => const BooksCatalogScreen()
+            '/books': (context) => const BooksCatalogScreen(),
+            '/favorites': (context) => const FavoriteBooksScreen(),
           },
         ));
   }

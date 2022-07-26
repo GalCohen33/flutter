@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_one/Models/books.model.dart';
+import 'package:flutter_one/Models/booksFavorites.model.dart';
+import 'package:provider/provider.dart';
 import '../Services/books.service.dart';
 
 class BooksCatalogScreen extends StatefulWidget {
@@ -19,14 +21,14 @@ class _BooksCatalogScreenState extends State<BooksCatalogScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (index == 3)
-            index = 0;
-          else
-            index++;
-        });
-      },
+      // onTap: () {
+      //   setState(() {
+      //     if (index == 3)
+      //       index = 0;
+      //     else
+      //       index++;
+      //   });
+      // },
       child: BooksCatalog(query: topics[index]),
     );
   }
@@ -46,9 +48,12 @@ class BooksCatalog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('books'),
-        ), //headerWidget(key: key, title: 'books'),
+        appBar: AppBar(title: const Text('books'), actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite_border),
+            onPressed: () => Navigator.pushNamed(context, '/favorites'),
+          )
+        ]), //headerWidget(key: key, title: 'books'),
         body: DefaultTextStyle(
             style: Theme.of(context).textTheme.headline2!,
             textAlign: TextAlign.center,
@@ -183,13 +188,10 @@ class _bookItem extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 0, right: 8),
             child: Column(
               children: [
-                Icon(
-                  Icons.favorite,
-                  color: Colors.grey[500],
-                ),
-                const Text(
-                  '4.7k',
-                )
+                _favButton(item: _book)
+                // const Text(
+                //   '4.7k',
+                // )
               ],
             ),
           ),
@@ -204,4 +206,60 @@ class _bookItem extends StatelessWidget {
   //   double result = 5 - (random.nextInt(5) * random.nextDouble());
   //   return result.toStringAsFixed(1);
   // }
+}
+
+class _favButton extends StatelessWidget {
+  final BookModel item;
+
+  const _favButton({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    // The context.select() method will let you listen to changes to
+    // a *part* of a model. You define a function that "selects" (i.e. returns)
+    // the part you're interested in, and the provider package will not rebuild
+    // this widget unless that particular part of the model changes.
+    //
+    // This can lead to significant performance improvements.
+    var isOnTheList = context.select<FavoriteBooksModel, bool>(
+        // Here, we are only interested whether [item] is inside the cart.
+        (favorites) => favorites.isOnTheList(item.id));
+
+    return TextButton(
+      onPressed: isOnTheList
+          ? () {
+              // If the item is not in cart, we let the user add it.
+              // We are using context.read() here because the callback
+              // is executed whenever the user taps the button. In other
+              // words, it is executed outside the build method.
+              var favorites = context.read<FavoriteBooksModel>();
+              favorites.removeItem(item.id);
+            }
+          : () {
+              // If the item is not in cart, we let the user add it.
+              // We are using context.read() here because the callback
+              // is executed whenever the user taps the button. In other
+              // words, it is executed outside the build method.
+              var favorites = context.read<FavoriteBooksModel>();
+              favorites.addItem(item);
+            },
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+          if (states.contains(MaterialState.pressed)) {
+            return Theme.of(context).primaryColor;
+          }
+          return null; // Defer to the widget's default.
+        }),
+      ),
+      child: isOnTheList
+          ? Icon(
+              Icons.favorite,
+              color: Colors.red[500],
+            )
+          : Icon(
+              Icons.favorite,
+              color: Colors.grey[500],
+            ),
+    );
+  }
 }

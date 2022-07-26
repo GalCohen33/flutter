@@ -1,21 +1,24 @@
 import 'dart:convert';
 
 class BookModel {
+  final String id;
   final String title;
   final String author;
   final String thumbnailUrl;
   final String description;
 
   const BookModel(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.author,
       required this.thumbnailUrl,
       required this.description});
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     return BookModel(
+        id: json['id'],
         title: json['userId'],
-        author: json['id'],
+        author: json['author'],
         thumbnailUrl: json['title'],
         description: json['description']);
   }
@@ -51,6 +54,7 @@ class BookListModel {
 
     List<BookModel> books = jsonList
         .map((jsonBook) => BookModel(
+            id: jsonBook['id'],
             title: jsonBook['volumeInfo']['title'],
             author: jsonBook['volumeInfo']['authors'] != null
                 ? (jsonBook['volumeInfo']['authors'] as List).join(', ')
