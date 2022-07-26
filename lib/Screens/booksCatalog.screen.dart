@@ -44,13 +44,20 @@ class BooksCatalog extends StatefulWidget {
 
 class _BooksCatalogState extends State<BooksCatalog> {
   bool open = false;
+  late String searchQuery = 'war';
+
+  callback(query) {
+    setState(() {
+      searchQuery = query;
+    });
+  }
 
   //final Future<List<BookModel>> _books = BooksService.fetchBook();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            bottom: open ? const SearchBox() : null,
+            bottom: open ? SearchBox(callback) : null,
             title: const Text('books'),
             actions: [
               IconButton(
@@ -68,8 +75,8 @@ class _BooksCatalogState extends State<BooksCatalog> {
             style: Theme.of(context).textTheme.headline2!,
             textAlign: TextAlign.center,
             child: FutureBuilder<List<BookModel>>(
-                future: BooksService.fetchBook(widget
-                    .query), // _books, // a previously-obtained Future<String> or null
+                future: BooksService.fetchBook(
+                    searchQuery), // _books, // a previously-obtained Future<String> or null
                 builder: (BuildContext context,
                     AsyncSnapshot<List<BookModel>> snapshot) {
                   //List<Widget> children;

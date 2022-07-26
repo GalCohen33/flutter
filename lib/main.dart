@@ -3,7 +3,6 @@ import 'package:flutter_one/Models/booksFavorites.model.dart';
 import 'package:flutter_one/Models/catalog.model.dart';
 import 'package:flutter_one/Screens/booksFavorite.screen.dart';
 import 'package:flutter_one/Screens/cart.screen.dart';
-import 'package:flutter_one/Services/books.service.dart';
 import 'package:provider/provider.dart';
 
 import 'Models/cart.model.dart';
