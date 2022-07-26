@@ -18,6 +18,15 @@ class FavoriteBooksModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeItemByIndex(int index) {
+    _favoriteBooks.removeAt(index);
+    notifyListeners();
+  }
+
+  BookModel getItemByIndex(int index) {
+    return _favoriteBooks[index];
+  }
+
   bool isOnTheList(String id) {
     return _favoriteBooks.indexWhere((element) => element.id == id) > -1;
   }

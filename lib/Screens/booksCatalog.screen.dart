@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_one/Models/books.model.dart';
 import 'package:flutter_one/Models/booksFavorites.model.dart';
@@ -132,10 +130,6 @@ class _bookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return Column(
-    //crossAxisAlignment: CrossAxisAlignment.center,
-    //mainAxisSize: MainAxisSize.min,
-    //children: <Widget>[
     return Card(
         elevation: 18.0,
         shape: const RoundedRectangleBorder(
@@ -143,24 +137,11 @@ class _bookItem extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.all(8.0),
         child: Row(children: [
-          _book.thumbnailUrl != ''
-              ? Image.network(
-                  _book.thumbnailUrl,
-                  fit: BoxFit.cover,
-                  height: 100.0,
-                  width: 65.0,
-                )
-              : Image.asset(
-                  'assets/images/no-image.jpg',
-                  fit: BoxFit.cover,
-                  scale: 4,
-                ),
+          _bookImage(imageUrl: _book.thumbnailUrl),
           Expanded(
-            /*1*/
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /*2*/
                 Container(
                   padding: const EdgeInsets.only(bottom: 8, left: 8),
                   child: Text(
@@ -183,7 +164,6 @@ class _bookItem extends StatelessWidget {
               ],
             ),
           ),
-          /*3*/
           Container(
             padding: const EdgeInsets.only(bottom: 0, right: 8),
             child: Column(
@@ -197,15 +177,24 @@ class _bookItem extends StatelessWidget {
           ),
         ]));
   }
+}
 
-  // String randomNumber() {
-  //   var random = Random();
-  //   double min = 0;
-  //   double max = 5;
+class _bookImage extends StatelessWidget {
+  final String imageUrl;
+  const _bookImage({super.key, required this.imageUrl});
 
-  //   double result = 5 - (random.nextInt(5) * random.nextDouble());
-  //   return result.toStringAsFixed(1);
-  // }
+  @override
+  Widget build(BuildContext context) {
+    return imageUrl != ''
+        ? Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+            height: 100.0,
+            width: 65.0,
+          )
+        : Image.asset('assets/images/no-image.jpg',
+            fit: BoxFit.cover, scale: 4);
+  }
 }
 
 class _favButton extends StatelessWidget {
