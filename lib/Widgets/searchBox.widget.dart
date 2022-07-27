@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class SearchBox extends StatefulWidget implements PreferredSizeWidget {
-  Function(String query) callback;
+  Function(dynamic state) callback;
 
   SearchBox(this.callback, {Key? key}) : super(key: key);
   @override
@@ -31,7 +31,12 @@ class _SearchBoxState extends State<SearchBox> {
               hintText: 'Enter a search term',
               contentPadding: EdgeInsets.only(left: 16),
             ),
-            onChanged: (value) => {widget.callback(value)},
+            onChanged: (value) => {
+              widget.callback({'query': value, 'open': true})
+            },
+            onSubmitted: (value) => {
+              widget.callback({'query': value, 'open': false})
+            },
           )),
     );
   }

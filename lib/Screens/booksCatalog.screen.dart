@@ -46,9 +46,10 @@ class _BooksCatalogState extends State<BooksCatalog> {
   bool open = false;
   late String searchQuery = 'war';
 
-  callback(query) {
+  callback(dynamic state) {
     setState(() {
-      searchQuery = query;
+      searchQuery = state['query'];
+      open = state['open'];
     });
   }
 
